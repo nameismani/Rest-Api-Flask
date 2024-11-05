@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Flask MongoDB CRUD</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Item List</h1>
+    <form action="{{ url_for('create_item') }}" method="post">
+      <input type="text" name="name" placeholder="Item Name" required />
+      <input
+        type="text"
+        name="description"
+        placeholder="Description"
+        required
+      />
+      <button type="submit">Add Item</button>
+    </form>
+
+    <ul>
+      {% for item in items %}
+      <li>
+        <strong>{{ item.name }}</strong>: {{ item.description }}
+        <form
+          action="{{ url_for('update_item', id=item._id) }}"
+          method="post"
+          style="display: inline"
+        >
+          <input type="text" name="name" placeholder="Update Name" />
+          <input
+            type="text"
+            name="description"
+            placeholder="Update Description"
+          />
+          <button type="submit">Update</button>
+        </form>
+        <form
+          action="{{ url_for('delete_item', id=item._id) }}"
+          method="post"
+          style="display: inline"
+        >
+          <button type="submit">Delete</button>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
